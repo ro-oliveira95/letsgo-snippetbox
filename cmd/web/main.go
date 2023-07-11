@@ -9,6 +9,7 @@ import (
 	"net/http"
 	"os"
 
+	"github.com/go-playground/form/v4"
 	"github.com/ro-oliveira95/letsgo-snippetbox/internal/models"
 
 	_ "github.com/go-sql-driver/mysql"
@@ -21,6 +22,7 @@ type application struct {
 	db            *sql.DB
 	snippets      *models.SnippetModel
 	templateCache map[string]*template.Template
+	formDecoder   *form.Decoder
 }
 
 func main() {
@@ -48,6 +50,7 @@ func main() {
 		db:            db,
 		snippets:      &models.SnippetModel{DB: db},
 		templateCache: templateCache,
+		formDecoder:   form.NewDecoder(),
 	}
 
 	srv := &http.Server{
