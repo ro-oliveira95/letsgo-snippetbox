@@ -20,8 +20,8 @@ func (app *application) routes() http.Handler {
 
 	// Middleware chains
 	standard := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
-	dynamic := alice.New(app.sessionManager.LoadAndSave, noSurf)
-	protected := dynamic.Append(app.checkIsAuthenticated)
+	dynamic := alice.New(app.sessionManager.LoadAndSave, noSurf, app.authenticate)
+	protected := dynamic.Append(app.requireAuthentication)
 
 	// Routes definition
 	router.Handler(http.MethodGet, "/", dynamic.ThenFunc(app.home))
