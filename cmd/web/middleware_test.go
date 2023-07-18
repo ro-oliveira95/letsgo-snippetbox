@@ -44,5 +44,5 @@ func TestSecureHeaders(t *testing.T) {
 
 	// Check response's status code and body content.
 	assert.Equal(t, res.StatusCode, http.StatusOK, "")
-	assert.BodyContains(t, res, "OK")
+	assert.Equal(t, readResponseBody(t, res), "OK", "")
 }

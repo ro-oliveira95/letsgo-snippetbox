@@ -36,5 +36,7 @@ func (app *application) routes() http.Handler {
 	router.Handler(http.MethodPost, "/snippet/create", protected.ThenFunc(app.snippetCreate))
 	router.Handler(http.MethodPost, "/user/logout", protected.ThenFunc(app.userLogout))
 
+	router.HandlerFunc(http.MethodGet, "/ping", ping)
+
 	return standard.Then(router)
 }
